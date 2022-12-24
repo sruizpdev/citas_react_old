@@ -9,6 +9,12 @@ const Formulario = ({ pacientes, setPacientes }) => {
   const [sintomas, setSintomas] = useState("");
   const [error, setError] = useState(false);
 
+  const generarId = () => {
+    const random = Math.random().toString().substring(2);
+    const fecha = Date.now().toString(36);
+    return random + fecha;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -24,8 +30,14 @@ const Formulario = ({ pacientes, setPacientes }) => {
       email,
       fecha,
       sintomas,
+      id: generarId(),
     };
     setPacientes([...pacientes, objetoPaciente]);
+    setNombre("");
+    setPropietario("");
+    setEmail("");
+    setFecha("");
+    setSintomas("");
   };
 
   return (
@@ -39,7 +51,11 @@ const Formulario = ({ pacientes, setPacientes }) => {
         onSubmit={handleSubmit}
         className="bg-white shadow-md rounded-md py-10 px-5"
       >
-        {error && <Error mensajeError="Todos los campos son obligatorios" />}
+        {error && (
+          <Error>
+            <p> Todos los campos son obligatorios</p>{" "}
+          </Error>
+        )}
         <div className="mb-5">
           <label
             className="block text-gray-700 uppercase font-bold"
