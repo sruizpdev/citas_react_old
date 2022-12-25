@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Error from "./Error";
 
-const Formulario = ({ paciente, pacientes, setPacientes }) => {
+const Formulario = ({ paciente, pacientes, setPaciente, setPacientes }) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
@@ -47,6 +47,7 @@ const Formulario = ({ paciente, pacientes, setPacientes }) => {
         pacieneteSate.id === paciente.id ? objetoPaciente : pacieneteSate
       );
       setPacientes(pacientesActualizados);
+      setPaciente({})
     } else {
       objetoPaciente.id = generarId();
       setPacientes([...pacientes, objetoPaciente]);
