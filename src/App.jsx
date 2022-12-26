@@ -1,17 +1,29 @@
 import Formulario from "./components/Formulario";
 import Header from "./components/Header";
 import ListadoPacientes from "./components/ListadoPacientes";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
-  const [pacientes, setPacientes] = useState([]);
+  let pacientesLS = JSON.parse(localStorage.getItem("pacientes"));
+  if (!pacientesLS) {
+    pacientesLS = [];
+  }
+  const [pacientes, setPacientes] = useState(pacientesLS);
   const [paciente, setPaciente] = useState({});
+
+  useEffect(() => {
+    if (pacientesLS) {
+      localStorage.setItem("pacientes", JSON.stringify(pacientes));
+    } else {
+      localStorage.setItem("pacientes", JSON.stringify([]));
+    }
+  }, [pacientes, pacientesLS]);
 
   const eliminarPaciente = (id) => {
     const pacientesActualizados = pacientes.filter(
       (paciente) => paciente.id !== id
     );
-    setPacientes([...pacientesActualizados])
+    setPacientes([...pacientesActualizados]);
   };
   return (
     <div className="container mx-auto">
